@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Row, Card } from 'antd';
+import { Button, Form, Input, Row, Card, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import '../index.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -12,14 +12,36 @@ const Login = () => {
     const listUser = await JSON.parse(localStorage.getItem('listUser'));
     let i = 0;
     const lengthList = listUser.length;
+    let check = false;
     for (i = 0; i < lengthList; i++) {
       if (
         listUser[i].password === values.password &&
         listUser[i].username === values.username
       ) {
         localStorage.setItem('current-user', JSON.stringify(listUser[i]));
+        Modal.success({
+          content: 'Đăng nhập thành công!',
+        });
         navigate('/');
+        check = true;
+      } else if (
+        listUser[i].password !== values.password &&
+        listUser[i].username === values.username
+      ) {
+        Modal.error({
+          title: 'SAI MẬT KHẨU',
+          content: 'Vui lòng nhập lại mật khẩu!',
+        });
+        console.log('loi 1');
+        check = true;
       }
+    }
+
+    if (check === false) {
+      Modal.error({
+        title: 'TÀI KHOẢN KHÔNG TỒN TẠI',
+        content: 'Vui lòng đăng ký tài khoản!',
+      });
     }
   };
 

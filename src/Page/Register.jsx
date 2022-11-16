@@ -156,6 +156,10 @@ const Register = () => {
                     required: true,
                     message: 'Vui lòng nhập mật khẩu của bạn!',
                   },
+                  {
+                    min: 6,
+                    message: 'Vui lòng đặt mật khẩu dài hơn 6 ký tự ',
+                  },
                 ]}
                 hasFeedback
               >
