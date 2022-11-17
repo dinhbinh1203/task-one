@@ -31,12 +31,12 @@ const tailFormItemLayout = {
   },
 };
 
-const checkEmail = (obj, val) => {
+const checkEmailExact = (obj, val) => {
   const result = !!obj.find(({ email }) => email === val.email);
   return result;
 };
 
-const checkUsername = (obj, val) => {
+const checkUsernameExact = (obj, val) => {
   const result = !!obj.find(({ username }) => username === val.username);
   return result;
 };
@@ -54,30 +54,42 @@ const Register = () => {
       });
       form.resetFields();
     } else {
-      if (!checkEmail(listUser, values) && !checkUsername(listUser, values)) {
+      if (
+        !checkEmailExact(listUser, values) &&
+        !checkUsernameExact(listUser, values)
+      ) {
         listUser.push(values);
         localStorage.setItem('listUser', JSON.stringify(listUser));
         Modal.success({
           content: 'Đăng ký thành công',
         });
         form.resetFields();
-      } else if (
-        !checkEmail(listUser, values) &&
-        checkUsername(listUser, values)
+      }
+
+      if (
+        !checkEmailExact(listUser, values) &&
+        checkUsernameExact(listUser, values)
       ) {
         Modal.warning({
           title: 'TÊN NGƯỜI DÙNG ĐÃ TỒN TẠI',
           content: 'Vui lòng đăng ký bằng tên khác',
         });
-      } else if (
-        checkEmail(listUser, values) &&
-        !checkUsername(listUser, values)
+      }
+
+      if (
+        checkEmailExact(listUser, values) &&
+        !checkUsernameExact(listUser, values)
       ) {
         Modal.warning({
           title: 'EMAIL ĐÃ SỬ DỤNG',
           content: 'Vui lòng đăng ký bằng email khác',
         });
-      } else {
+      }
+
+      if (
+        checkEmailExact(listUser, values) &&
+        checkUsernameExact(listUser, values)
+      ) {
         Modal.warning({
           title: 'TÀI KHOẢN ĐÃ TỒN TẠI',
           content: 'Vui lòng đăng nhập hoặc đăng ký tài khoản khác',

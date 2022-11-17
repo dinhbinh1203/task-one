@@ -39,6 +39,7 @@ const showToastMessage = () => {
 
 const ChangePass = () => {
   const [form] = Form.useForm();
+
   const onFinish = async (values) => {
     const currentUser = await JSON.parse(localStorage.getItem('current-user'));
     let listUser = await JSON.parse(localStorage.getItem('listUser'));
@@ -48,7 +49,9 @@ const ChangePass = () => {
         title: 'This is an error message',
         content: 'Mật khẩu hiện tại nhập không đúng',
       });
-    } else {
+    }
+
+    if (currentUser.password === values.current_password) {
       const newUser = {
         ...currentUser,
         password: values.new_password,

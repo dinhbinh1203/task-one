@@ -5,17 +5,17 @@ import Login from './Page/Login';
 import { Home } from './Page/Home';
 import './index.css';
 import ChangePass from './Page/ChangePass';
-import { DefaultRoute } from './Route/DefaultRoute';
-import { UserRoute } from './Route/UserRoute';
+import { DefaultLayout } from './Route/DefaultLayout';
+import { UserLayout } from './Route/UserLayout';
 
 function App() {
   return (
     <Routes>
-      <Route element={<DefaultRoute />}>
+      <Route element={<DefaultLayout />}>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Route>
-      <Route element={<UserRoute />}>
+      <Route element={<UserLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/change-pass" element={<ChangePass />} />
       </Route>

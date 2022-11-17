@@ -8,11 +8,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
+
   const onFinish = async (values) => {
     const listUser = await JSON.parse(localStorage.getItem('listUser'));
+    let checkUserExact = false;
+
     let i = 0;
     const lengthList = listUser.length;
-    let check = false;
+
     for (i = 0; i < lengthList; i++) {
       if (
         listUser[i].password === values.password &&
@@ -23,8 +26,10 @@ const Login = () => {
           content: 'Đăng nhập thành công!',
         });
         navigate('/');
-        check = true;
-      } else if (
+        checkUserExact = true;
+      }
+
+      if (
         listUser[i].password !== values.password &&
         listUser[i].username === values.username
       ) {
@@ -32,12 +37,11 @@ const Login = () => {
           title: 'SAI MẬT KHẨU',
           content: 'Vui lòng nhập lại mật khẩu!',
         });
-        console.log('loi 1');
-        check = true;
+        checkUserExact = true;
       }
     }
 
-    if (check === false) {
+    if (checkUserExact === false) {
       Modal.error({
         title: 'TÀI KHOẢN KHÔNG TỒN TẠI',
         content: 'Vui lòng đăng ký tài khoản!',
